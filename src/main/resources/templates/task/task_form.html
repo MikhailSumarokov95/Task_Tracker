@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/task/save}" th:object="${task}" method="post">
+    <p>Id: <input type="hidden" th:field="*{id}" /></p>
+    <p>Text: <input type="text" th:field="*{text}" /></p>
+    <p>DateDeadLine: <input type="date" th:field="*{dateDeadLine}"  /></p>
+    <p>NameGroup: <input type="text" th:field="*{nameGroup}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+
+</body>
+</html>

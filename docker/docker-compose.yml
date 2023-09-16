@@ -1,0 +1,17 @@
+version: '3.1'
+
+volumes:
+  pg_project_task_tracker:
+
+services:
+  pg_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=task_db
+    volumes:
+      - pg_project_task_tracker:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"

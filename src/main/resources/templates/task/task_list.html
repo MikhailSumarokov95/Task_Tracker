@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>text</th>
+        <th>dateCreated</th>
+        <th>dateDeadLine</th>
+        <th>isCompleted</th>
+        <th>nameGroup</th>
+        <th>actions</th>
+    </tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.text}"></td>
+        <td th:text="${task.dateCreated}"></td>
+        <td th:text="${task.dateDeadLine}"></td>
+        <td th:text="${task.isCompleted} ? 'Completed' : 'DidNotCompleted'"></td>
+        <td th:text="${task.nameGroup}"></td>
+        <td> <a th:href="${'/task/' + task.id + '/delete' }">Delete</a> </td>
+    </tr>
+</table>
+</body>
+</html>
