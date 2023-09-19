@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tasks</title>
 </head>
 <body>
 
-<table>
+<table border="1">
     <tr>
         <th>Id</th>
-        <th>text</th>
-        <th>dateCreated</th>
-        <th>dateDeadLine</th>
-        <th>isCompleted</th>
-        <th>nameGroup</th>
-        <th>actions</th>
+        <th>Text</th>
+        <th>Date created</th>
+        <th>Date Deadline</th>
+        <th>Status</th>
+        <th>Name group</th>
+        <th>Delete</th>
+        <th>Open</th>
     </tr>
     <tr th:each="task : ${tasks}">
         <td th:text="${task.id}"></td>
@@ -24,7 +25,13 @@
         <td th:text="${task.isCompleted} ? 'Completed' : 'DidNotCompleted'"></td>
         <td th:text="${task.nameGroup}"></td>
         <td> <a th:href="${'/task/' + task.id + '/delete' }">Delete</a> </td>
+        <td> <a th:href="${'/task/' + task.id }">Update</a> </td>
     </tr>
 </table>
+
+<form action="#" th:action="@{/task/new}" method="get">
+    <input type="submit" value="Create new"/>
+</form>
+
 </body>
 </html>

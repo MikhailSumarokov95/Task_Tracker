@@ -32,13 +32,13 @@ public class TaskController {
     public String getTask(@PathVariable Long id, Model model) {
         Task task = taskRepository.findById(id).orElse(null);
         model.addAttribute("task", task);
-        return "task/task_card";
+        return "task/task_update";
     }
 
     @GetMapping("/new")
     public String getTaskForm(Model model) {
         model.addAttribute("task", new Task());
-        return "task/task_form";
+        return "task/task_create";
     }
 
     @PostMapping("/save")
@@ -51,6 +51,12 @@ public class TaskController {
     @GetMapping("/{id}/delete")
     public String deleteTask(@PathVariable Long id) {
         taskRepository.deleteById(id);
+        return "redirect:/task";
+    }
+
+    @PostMapping("/update")
+    public String updateTask(@ModelAttribute Task task) {
+        taskRepository.save(task);
         return "redirect:/task";
     }
 }
