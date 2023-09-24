@@ -27,7 +27,7 @@ public class TaskController {
 
     @GetMapping()
     public String getTaskList(Model model) {
-        List<Task> tasks = taskRepository.findAll();
+        List<Task> tasks = taskRepository.findAllByOrderByIdAsc();
         model.addAttribute("tasks", tasks);
         return "task/task_list";
     }
@@ -37,7 +37,7 @@ public class TaskController {
         Task task = taskRepository.findById(id).orElse(null);
         model.addAttribute("task", task);
 
-        List<TaskGroup> taskGroups = taskGroupRepository.findAll();
+        List<TaskGroup> taskGroups = taskGroupRepository.findAllByOrderByIdAsc();
         model.addAttribute("taskGroups", taskGroups);
         return "task/task_update";
     }
