@@ -1,4 +1,4 @@
-package ru.sumarokov.taskTracker.entity;
+package ru.sumarokov.task_tracker.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -14,7 +14,8 @@ public class Task {
     private LocalDate dateDeadLine;
     private String text;
     private boolean isCompleted;
-    private String nameGroup;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TaskGroup taskGroup;
 
     public Task() {}
 
@@ -24,7 +25,6 @@ public class Task {
         this.dateDeadLine = dateDeadLine;
         this.text = text;
         this.isCompleted = isCompleted;
-        this.nameGroup = nameGroup;
     }
 
     public Long getId() {
@@ -67,13 +67,9 @@ public class Task {
         isCompleted = completed;
     }
 
-    public String getNameGroup() {
-        return nameGroup;
-    }
+    public TaskGroup getTaskGroup() { return taskGroup; }
 
-    public void setNameGroup(String nameGroup) {
-        this.nameGroup = nameGroup;
-    }
+    public void setTaskGroup(TaskGroup taskGroup) { this.taskGroup = taskGroup; }
 
     @Override
     public String toString() {
@@ -83,7 +79,6 @@ public class Task {
                 ", dateDeadLine=" + dateDeadLine +
                 ", text='" + text + '\'' +
                 ", isCompleted=" + isCompleted +
-                ", nameGroup='" + nameGroup + '\'' +
                 '}';
     }
 }

@@ -2,16 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create</title>
+    <title>Task create</title>
 </head>
 <body>
 
-<form action="#" th:action="@{/task/save}" th:object="${task}" method="post">
-    <input type="hidden" th:field="*{id}" />
-    <p>Text: <input type="text" th:field="*{text}" /></p>
-    <p>Date deadline: <input type="date" th:field="*{dateDeadLine}"  /></p>
-    <p>Name group: <input type="text" th:field="*{nameGroup}" /></p>
-    <p><input type="submit" value="Create" /> <input type="reset" value="Reset" /></p>
+<h1>Create task</h1>
+
+<form action="#" th:action="@{/task/save_created}" th:object="${task}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <p>Text: <input type="text" th:field="*{text}"/></p>
+    <p>Date deadline: <input type="date" th:field="*{dateDeadLine}"/></p>
+    <p>Name group: <select th:field="*{taskGroup}">
+        <option th:each="group : ${taskGroups}"
+                th:value="${group.id}"
+                th:text="${group.name}">
+        </option>
+    </select></p>
+    <p><input type="submit" value="Create"/> <input type="reset" value="Reset"/></p>
 </form>
 
 <form action="#" th:action="@{/task}" method="get">

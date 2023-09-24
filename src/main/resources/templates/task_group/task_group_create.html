@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task group create</title>
+</head>
+<body>
+
+<h1>Create task group</h1>
+
+<form action="#" th:action="@{/task_group/save_created}" th:object="${taskGroup}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{tasks}"/>
+    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <p><input type="submit" value="Create"/> <input type="reset" value="Reset"/></p>
+</form>
+
+<form action="#" th:action="@{/task_group}" method="get">
+    <input type="submit" value="Back"/>
+</form>
+
+</body>
+</html>

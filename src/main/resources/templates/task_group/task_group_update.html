@@ -2,11 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Task list</title>
+    <title>Task group create</title>
 </head>
 <body>
 
-<h1>Task list</h1>
+<h1>Update task group</h1>
+
+<form action="#" th:action="@{/task_group/save_update}" th:object="${taskGroup}" method="post">
+    <p>Id: <input type="text" readonly th:field="*{id}"/></p>
+    <p>Tasks: <input type="text" readonly th:field="*{tasks}"/></p>
+    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+</form>
 
 <table border="1">
     <tr>
@@ -17,27 +24,21 @@
         <th>Status</th>
         <th>Name group</th>
         <th>Delete</th>
-        <th>Update</th>
     </tr>
     <tr th:each="task : ${tasks}">
         <td th:text="${task.id}"></td>
         <td th:text="${task.text}"></td>
         <td th:text="${task.dateCreated}"></td>
         <td th:text="${task.dateDeadLine}"></td>
-        <td th:text="${task.isCompleted} ? 'Completed' : 'Did Not Completed'"></td>
+        <td th:text="${task.isCompleted} ? 'Completed' : 'DidNotCompleted'"></td>
         <td th:text="${task.taskGroup.name}"></td>
-        <td><a th:href="${'/task/' + task.id + '/delete' }">Delete</a></td>
-        <td><a th:href="${'/task/' + task.id }">Update</a></td>
+        <td><a th:href="${'/task_group/addTaskToGroup/' + task.id + 'to'} + ${taskGroup.id}">Add to Group</a></td>
     </tr>
 
 </table>
 
-<form action="#" th:action="@{/task/create}" method="get">
-    <input type="submit" value="Create new"/>
-</form>
-
 <form action="#" th:action="@{/task_group}" method="get">
-    <input type="submit" value="Open task group list"/>
+    <input type="submit" value="Back"/>
 </form>
 
 </body>

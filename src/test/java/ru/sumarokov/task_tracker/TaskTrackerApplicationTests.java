@@ -1,4 +1,4 @@
-package ru.sumarokov.taskTracker;
+package ru.sumarokov.task_tracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
