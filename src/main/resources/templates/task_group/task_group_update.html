@@ -32,7 +32,7 @@
         <td th:text="${task.dateDeadLine}"></td>
         <td th:text="${task.isCompleted} ? 'Completed' : 'DidNotCompleted'"></td>
         <td th:text="${task.taskGroup.name}"></td>
-        <td><a th:href="${'/task_group/addTaskToGroup/' + task.id + 'to'} + ${taskGroup.id}">Add to Group</a></td>
+        <td> <a th:if="${task.taskGroup != taskGroup}" th:href="${'/task_group/addTaskToGroup/' + task.id + 'to'} + ${taskGroup.id}">Add to Group</a></td>
     </tr>
 
 </table>
