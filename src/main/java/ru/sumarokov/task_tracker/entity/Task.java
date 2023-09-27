@@ -19,6 +19,10 @@ public class Task {
 
     public Task() {}
 
+    public Task(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
     public Task(Long id, LocalDate dateCreated, LocalDate dateDeadLine, String text, boolean isCompleted, String nameGroup) {
         this.id = id;
         this.dateCreated = dateCreated;

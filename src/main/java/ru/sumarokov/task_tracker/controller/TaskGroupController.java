@@ -29,32 +29,25 @@ public class TaskGroupController {
         return "task_group/list";
     }
 
-    @GetMapping("/create")
-    public String getTaskGroupCreate(Model model) {
-        model.addAttribute("taskGroup", new TaskGroup(0L,""));
-        return "task_group/create";
-    }
-
-    @PostMapping("/created")
-    public String addTaskGroup(@ModelAttribute TaskGroup taskGroup) {
-        taskGroupRepository.save(taskGroup);
-        return "redirect:/task-group";
-    }
-
     @GetMapping("/{id}")
-    public String getTaskGroupUpdate(@PathVariable Long id, Model model) {
-        TaskGroup taskGroup = taskGroupRepository.findById(id).orElse(null);
+    public String getTaskGroupForm(@PathVariable Long id, Model model) {
+        TaskGroup taskGroup = taskGroupRepository.findById(id).orElse(new TaskGroup(-1L, ""));
         model.addAttribute("taskGroup", taskGroup);
 
         List<Task> tasks = taskRepository.findAllByOrderByIdAsc();
         model.addAttribute("tasks", tasks);
-        return "task_group/update";
+        return "task_group/form";
     }
 
-    @PostMapping("/update")
-    public String updateTaskGroup(@ModelAttribute TaskGroup taskGroup) {
-        taskGroupRepository.save(taskGroup);
-        return "redirect:/task-group";
+    @GetMapping("/create")
+    public String getTaskGroupCreate(Model model) {
+        return "redirect:/task-group/-1";
+    }
+
+    @PostMapping("/save")
+    public String saveTaskGroup(@ModelAttribute TaskGroup taskGroup) {
+        TaskGroup savedTaskGroup = taskGroupRepository.save(taskGroup);
+        return "redirect:/task-group/" + savedTaskGroup.getId();
     }
 
     @GetMapping("/{id}/delete")

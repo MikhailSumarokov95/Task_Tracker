@@ -33,27 +33,23 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public String getTaskUpdate(@PathVariable Long id, Model model) {
-        Task task = taskRepository.findById(id).orElse(null);
+    public String getTaskForm(@PathVariable Long id, Model model) {
+        Task newTask = new Task(LocalDate.now());
+        Task task = taskRepository.findById(id).orElse(newTask);
         model.addAttribute("task", task);
 
         List<TaskGroup> taskGroups = taskGroupRepository.findAllByOrderByIdAsc();
         model.addAttribute("taskGroups", taskGroups);
-        return "task/update";
+        return "task/form";
     }
 
     @GetMapping("/create")
-    public String getTaskCreate(Model model) {
-        model.addAttribute("task", new Task());
-
-        List<TaskGroup> taskGroups = taskGroupRepository.findAll();
-        model.addAttribute("taskGroups", taskGroups);
-        return "task/create";
+    public String getTaskCreate() {
+        return "redirect:/task/-1";
     }
 
-    @PostMapping("/created")
-    public String addTask(@ModelAttribute Task task) {
-        task.setDateCreated(LocalDate.now());
+    @PostMapping("/save")
+    public String saveTask(@ModelAttribute Task task) {
         taskRepository.save(task);
         return "redirect:/task";
     }
@@ -61,12 +57,6 @@ public class TaskController {
     @GetMapping("/{id}/delete")
     public String deleteTask(@PathVariable Long id) {
         taskRepository.deleteById(id);
-        return "redirect:/task";
-    }
-
-    @PostMapping("/update")
-    public String updateTask(@ModelAttribute Task task) {
-        taskRepository.save(task);
         return "redirect:/task";
     }
 }

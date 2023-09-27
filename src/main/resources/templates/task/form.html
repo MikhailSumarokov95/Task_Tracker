@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Task update</title>
+    <title>Form task</title>
 </head>
 <body>
 
-<h1>Update task</h1>
+<h1>Form task</h1>
 
-<form action="#" th:action="@{/task/update}" th:object="${task}" method="post">
-    <p>Id: <input type="text" readonly th:field="*{id}"/></p>
+<form action="#" th:action="@{/task/save}" th:object="${task}" method="post">
+    <input type="hidden" th:field="*{id}"/>
     <p>Text: <input type="text" th:field="*{text}"/></p>
     <p>Date created: <input type="text" readonly th:field="*{dateCreated}"/></p>
     <p>Date deadline: <input type="text" th:field="*{dateDeadLine}"/></p>
@@ -20,15 +20,11 @@
                 th:text="${group.name}">
         </option>
     </select></p>
-    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+    <p><input type="submit" value="Save"/> <input type="reset" value="Reset"/></p>
 </form>
 
 <form action="#" th:action="@{/task}" method="get">
-    <input type="submit" value="Return to list"/>
-</form>
-
-<form action="#" th:action="@{/task/create}" method="get">
-    <input type="submit" value="Create new"/>
+    <input type="submit" value="Back"/>
 </form>
 
 </body>

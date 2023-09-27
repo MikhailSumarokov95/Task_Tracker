@@ -10,7 +10,6 @@
 
 <table border="1">
     <tr>
-        <th>Id</th>
         <th>Text</th>
         <th>Date created</th>
         <th>Date Deadline</th>
@@ -20,7 +19,6 @@
         <th>Update</th>
     </tr>
     <tr th:each="task : ${tasks}">
-        <td th:text="${task.id}"></td>
         <td th:text="${task.text}"></td>
         <td th:text="${task.dateCreated}"></td>
         <td th:text="${task.dateDeadLine}"></td>

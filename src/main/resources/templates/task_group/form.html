@@ -2,21 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Task group create</title>
+    <title>Form task group</title>
 </head>
 <body>
 
-<h1>Update task group</h1>
+<h1>Form task group</h1>
 
-<form action="#" th:action="@{/task-group/update}" th:object="${taskGroup}" method="post">
-    <p>Id: <input type="text" readonly th:field="*{id}"/></p>
+<form action="#" th:action="@{/task-group/save}" th:object="${taskGroup}" method="post">
+    <input type="hidden" th:field="*{id}"/>
     <p>Name: <input type="text" th:field="*{name}"/></p>
-    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+    <p><input type="submit" value="Save"/> <input type="reset" value="Reset"/></p>
 </form>
 
-<table border="1">
+<table th:if="${taskGroup.id != -1}" border="1">
     <tr>
-        <th>Id</th>
         <th>Text</th>
         <th>Date created</th>
         <th>Date Deadline</th>
@@ -25,7 +24,6 @@
         <th>Delete</th>
     </tr>
     <tr th:each="task : ${tasks}">
-        <td th:text="${task.id}"></td>
         <td th:text="${task.text}"></td>
         <td th:text="${task.dateCreated}"></td>
         <td th:text="${task.dateDeadLine}"></td>
