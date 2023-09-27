@@ -58,8 +58,8 @@ public class TaskGroupController {
 
     @GetMapping("/{taskGroupId}/add-task/{taskId}")
     public String addTaskToGroup(@PathVariable Long taskId, @PathVariable Long taskGroupId) {
-        Task task = taskRepository.findById(taskId).orElse(null);
-        TaskGroup newTaskGroup = taskGroupRepository.findById(taskGroupId).orElse(null);
+        Task task = taskRepository.findById(taskId).orElseThrow();
+        TaskGroup newTaskGroup = taskGroupRepository.findById(taskGroupId).orElseThrow();
         task.setTaskGroup(newTaskGroup);
         taskRepository.save(task);
         return "redirect:/task-group/" + taskGroupId;
