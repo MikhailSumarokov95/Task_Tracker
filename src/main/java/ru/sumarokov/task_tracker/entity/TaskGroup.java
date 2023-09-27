@@ -11,14 +11,14 @@ public class TaskGroup {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
     @OneToMany(mappedBy = "taskGroup", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
     public TaskGroup() { }
 
-    public TaskGroup(long id, String name) {
+    public TaskGroup(Long id, String name) {
         this.id = id;
         this.name = name;
     }

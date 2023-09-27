@@ -11,7 +11,7 @@ import ru.sumarokov.task_tracker.repository.TaskRepository;
 import java.util.List;
 
 @Controller
-@RequestMapping("task_group")
+@RequestMapping("task-group")
 public class TaskGroupController {
 
     private final TaskGroupRepository taskGroupRepository;
@@ -26,19 +26,19 @@ public class TaskGroupController {
     public String getTaskGroup(Model model) {
         List<TaskGroup> taskGroups = taskGroupRepository.findAllByOrderByIdAsc();
         model.addAttribute("taskGroups", taskGroups);
-        return "task_group/task_group_list";
+        return "task_group/list";
     }
 
     @GetMapping("/create")
     public String getTaskGroupCreate(Model model) {
-        model.addAttribute("taskGroup", new TaskGroup());
-        return "task_group/task_group_create";
+        model.addAttribute("taskGroup", new TaskGroup(0L,""));
+        return "task_group/create";
     }
 
-    @PostMapping("/save_created")
+    @PostMapping("/created")
     public String addTaskGroup(@ModelAttribute TaskGroup taskGroup) {
         taskGroupRepository.save(taskGroup);
-        return "redirect:/task_group";
+        return "redirect:/task-group";
     }
 
     @GetMapping("/{id}")
@@ -48,27 +48,27 @@ public class TaskGroupController {
 
         List<Task> tasks = taskRepository.findAllByOrderByIdAsc();
         model.addAttribute("tasks", tasks);
-        return "task_group/task_group_update";
+        return "task_group/update";
     }
 
-    @PostMapping("/save_update")
+    @PostMapping("/update")
     public String updateTaskGroup(@ModelAttribute TaskGroup taskGroup) {
         taskGroupRepository.save(taskGroup);
-        return "redirect:/task_group";
+        return "redirect:/task-group";
     }
 
     @GetMapping("/{id}/delete")
     public String deleteTaskGroup(@PathVariable Long id) {
         if (id != 1L) taskGroupRepository.deleteById(id);
-        return "redirect:/task_group";
+        return "redirect:/task-group";
     }
 
-    @GetMapping("/addTaskToGroup/{idTask}to{idGroup}")
-    public String addTaskToGroup(@PathVariable Long idTask, @PathVariable Long idGroup) {
-        Task task = taskRepository.findById(idTask).orElse(null);
-        TaskGroup newTaskGroup = taskGroupRepository.findById(idGroup).orElse(null);
+    @GetMapping("/{taskGroupId}/add-task/{taskId}")
+    public String addTaskToGroup(@PathVariable Long taskId, @PathVariable Long taskGroupId) {
+        Task task = taskRepository.findById(taskId).orElse(null);
+        TaskGroup newTaskGroup = taskGroupRepository.findById(taskGroupId).orElse(null);
         task.setTaskGroup(newTaskGroup);
         taskRepository.save(task);
-        return "redirect:/task_group/" + idGroup;
+        return "redirect:/task-group/" + taskGroupId;
     }
 }

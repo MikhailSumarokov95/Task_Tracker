@@ -20,13 +20,13 @@
         <td th:text="${group.id}"></td>
         <td th:text="${group.name}"></td>
         <td th:text="${group.getCountTasks}"></td>
-        <td> <a th:href="${'/task_group/' + group.id + '/delete' }">Delete</a> </td>
-        <td> <a th:href="${'/task_group/' + group.id }">Update</a> </td>
+        <td> <a th:href="${'/task-group/' + group.id + '/delete' }">Delete</a> </td>
+        <td> <a th:href="${'/task-group/' + group.id }">Update</a> </td>
     </tr>
 
 </table>
 
-<form action="#" th:action="@{/task_group/create}" method="get">
+<form action="#" th:action="@{/task-group/create}" method="get">
     <input type="submit" value="Create new"/>
 </form>
 

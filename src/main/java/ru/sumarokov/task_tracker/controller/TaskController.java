@@ -29,7 +29,7 @@ public class TaskController {
     public String getTaskList(Model model) {
         List<Task> tasks = taskRepository.findAllByOrderByIdAsc();
         model.addAttribute("tasks", tasks);
-        return "task/task_list";
+        return "task/list";
     }
 
     @GetMapping("/{id}")
@@ -39,7 +39,7 @@ public class TaskController {
 
         List<TaskGroup> taskGroups = taskGroupRepository.findAllByOrderByIdAsc();
         model.addAttribute("taskGroups", taskGroups);
-        return "task/task_update";
+        return "task/update";
     }
 
     @GetMapping("/create")
@@ -48,10 +48,10 @@ public class TaskController {
 
         List<TaskGroup> taskGroups = taskGroupRepository.findAll();
         model.addAttribute("taskGroups", taskGroups);
-        return "task/task_create";
+        return "task/create";
     }
 
-    @PostMapping("/save_created")
+    @PostMapping("/created")
     public String addTask(@ModelAttribute Task task) {
         task.setDateCreated(LocalDate.now());
         taskRepository.save(task);
@@ -64,7 +64,7 @@ public class TaskController {
         return "redirect:/task";
     }
 
-    @PostMapping("/save_update")
+    @PostMapping("/update")
     public String updateTask(@ModelAttribute Task task) {
         taskRepository.save(task);
         return "redirect:/task";

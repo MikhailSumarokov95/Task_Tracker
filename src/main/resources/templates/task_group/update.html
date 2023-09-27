@@ -8,7 +8,7 @@
 
 <h1>Update task group</h1>
 
-<form action="#" th:action="@{/task_group/save_update}" th:object="${taskGroup}" method="post">
+<form action="#" th:action="@{/task-group/update}" th:object="${taskGroup}" method="post">
     <p>Id: <input type="text" readonly th:field="*{id}"/></p>
     <p>Name: <input type="text" th:field="*{name}"/></p>
     <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
@@ -31,12 +31,11 @@
         <td th:text="${task.dateDeadLine}"></td>
         <td th:text="${task.isCompleted} ? 'Completed' : 'DidNotCompleted'"></td>
         <td th:text="${task.taskGroup.name}"></td>
-        <td> <a th:if="${task.taskGroup != taskGroup}" th:href="${'/task_group/addTaskToGroup/' + task.id + 'to'} + ${taskGroup.id}">Add to Group</a></td>
+        <td> <a th:if="${task.taskGroup != taskGroup}" th:href="@{'/task-group/' + ${taskGroup.id} + '/add-task/' + ${task.id}}">Add to Group</a></td>
     </tr>
-
 </table>
 
-<form action="#" th:action="@{/task_group}" method="get">
+<form action="#" th:action="@{/task-group}" method="get">
     <input type="submit" value="Back"/>
 </form>
 

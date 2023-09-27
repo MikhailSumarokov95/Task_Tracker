@@ -8,7 +8,7 @@
 
 <h1>Create task</h1>
 
-<form action="#" th:action="@{/task/save_created}" th:object="${task}" method="post">
+<form action="#" th:action="@{/task/created}" th:object="${task}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <p>Text: <input type="text" th:field="*{text}"/></p>
     <p>Date deadline: <input type="date" th:field="*{dateDeadLine}"/></p>

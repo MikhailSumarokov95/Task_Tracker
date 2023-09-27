@@ -8,7 +8,7 @@
 
 <h1>Update task</h1>
 
-<form action="#" th:action="@{/task/save_update}" th:object="${task}" method="post">
+<form action="#" th:action="@{/task/update}" th:object="${task}" method="post">
     <p>Id: <input type="text" readonly th:field="*{id}"/></p>
     <p>Text: <input type="text" th:field="*{text}"/></p>
     <p>Date created: <input type="text" readonly th:field="*{dateCreated}"/></p>

@@ -25,8 +25,7 @@ public class TaskTrackerApplication implements CommandLineRunner {
 	public void run(String... args) {
 		if (taskGroupRepository.findById(1L).orElse(null) == null)
 		{
-			TaskGroup taskGroup = new TaskGroup();
-			taskGroup.setName("Default");
+			TaskGroup taskGroup = new TaskGroup(1L, "Default");
 			taskGroupRepository.save(taskGroup);
 		}
 	}
