@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.sumarokov.task_tracker.entity.Task;
 import ru.sumarokov.task_tracker.entity.TaskGroup;
 import ru.sumarokov.task_tracker.service.TaskGroupService;
 import ru.sumarokov.task_tracker.service.TaskService;
@@ -39,7 +38,7 @@ public class TaskGroupController {
 
     @GetMapping("/create")
     public String getTaskGroupCreate(Model model) {
-        model.addAttribute("taskGroup", taskGroupService.getEmptyTaskGroup());
+        model.addAttribute("taskGroup", new TaskGroup());
         model.addAttribute("tasks", taskService.getTasks());
         return "task_group/form";
     }

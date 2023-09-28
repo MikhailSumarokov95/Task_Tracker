@@ -17,11 +17,7 @@ public class Task {
     @ManyToOne(fetch = FetchType.LAZY)
     private TaskGroup taskGroup;
 
-    public Task() {}
-
-    public Task(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+    public Task() { dateCreated = LocalDate.now(); }
 
     public Task(Long id, LocalDate dateCreated, LocalDate dateDeadLine, String text, boolean isCompleted, String nameGroup) {
         this.id = id;

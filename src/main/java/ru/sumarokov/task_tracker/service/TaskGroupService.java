@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sumarokov.task_tracker.entity.Task;
 import ru.sumarokov.task_tracker.entity.TaskGroup;
+import ru.sumarokov.task_tracker.exception.EntityNotFoundException;
 import ru.sumarokov.task_tracker.repository.TaskGroupRepository;
 
 import java.util.List;
@@ -26,11 +27,7 @@ public class TaskGroupService {
     }
 
     public TaskGroup getTaskGroup(Long id) {
-        return taskGroupRepository.findById(id).orElseThrow();
-    }
-
-    public TaskGroup getEmptyTaskGroup() {
-        return new TaskGroup(-1L, "");
+        return taskGroupRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public TaskGroup saveTaskGroup(TaskGroup taskGroup) {
@@ -43,7 +40,7 @@ public class TaskGroupService {
 
     public void addTaskToGroup(Long taskId, Long taskGroupId) {
         Task task = taskService.getTask(taskId);
-        TaskGroup newTaskGroup = taskGroupRepository.findById(taskGroupId).orElseThrow();
+        TaskGroup newTaskGroup = taskGroupRepository.findById(taskGroupId).orElseThrow(EntityNotFoundException::new);
         task.setTaskGroup(newTaskGroup);
         taskService.saveTask(task);
     }
