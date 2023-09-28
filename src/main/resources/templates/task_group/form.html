@@ -10,6 +10,7 @@
 
 <form action="#" th:action="@{/task-group/save}" th:object="${taskGroup}" method="post">
     <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{tasks}"/>
     <p>Name: <input type="text" th:field="*{name}"/></p>
     <p><input type="submit" value="Save"/> <input type="reset" value="Reset"/></p>
 </form>
