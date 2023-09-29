@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form task group</title>
+</head>
+<body>
+
+<h1>Form task group</h1>
+
+<form action="#" th:action="@{/task-group/save}" th:object="${taskGroup}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{tasks}"/>
+    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <p><input type="submit" value="Save"/> <input type="reset" value="Reset"/></p>
+</form>
+
+<table th:if="${taskGroup.id != -1}" border="1">
+    <tr>
+        <th>Text</th>
+        <th>Date created</th>
+        <th>Date Deadline</th>
+        <th>Status</th>
+        <th>Name group</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.text}"></td>
+        <td th:text="${task.dateCreated}"></td>
+        <td th:text="${task.dateDeadLine}"></td>
+        <td th:text="${task.isCompleted} ? 'Completed' : 'DidNotCompleted'"></td>
+        <td th:text="${task.taskGroup.name}"></td>
+        <td> <a th:if="${task.taskGroup != taskGroup}" th:href="@{'/task-group/' + ${taskGroup.id} + '/add-task/' + ${task.id}}">Add to Group</a></td>
+    </tr>
+</table>
+
+<form action="#" th:action="@{/task-group}" method="get">
+    <input type="submit" value="Back"/>
+</form>
+
+</body>
+</html>

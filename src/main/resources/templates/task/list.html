@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task list</title>
+</head>
+<body>
+
+<h1>Task list</h1>
+
+<table border="1">
+    <tr>
+        <th>Text</th>
+        <th>Date created</th>
+        <th>Date Deadline</th>
+        <th>Status</th>
+        <th>Name group</th>
+        <th>Delete</th>
+        <th>Update</th>
+    </tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.text}"></td>
+        <td th:text="${task.dateCreated}"></td>
+        <td th:text="${task.dateDeadLine}"></td>
+        <td th:text="${task.isCompleted} ? 'Completed' : 'Did Not Completed'"></td>
+        <td th:text="${task.taskGroup.name}"></td>
+        <td><a th:href="${'/task/' + task.id + '/delete' }">Delete</a></td>
+        <td><a th:href="${'/task/' + task.id }">Update</a></td>
+    </tr>
+
+</table>
+
+<form action="#" th:action="@{/task/create}" method="get">
+    <input type="submit" value="Create new"/>
+</form>
+
+<form action="#" th:action="@{/task-group}" method="get">
+    <input type="submit" value="Open task group list"/>
+</form>
+
+</body>
+</html>

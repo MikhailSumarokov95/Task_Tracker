@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task group list</title>
+</head>
+<body>
+
+<h1>Task group list</h1>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Count of tasks</th>
+        <th>Delete</th>
+        <th>Update</th>
+    </tr>
+    <tr th:each="group : ${taskGroups}">
+        <td th:text="${group.name}"></td>
+        <td th:text="${group.getCountTasks}"></td>
+        <td> <a th:href="${'/task-group/' + group.id + '/delete' }">Delete</a> </td>
+        <td> <a th:href="${'/task-group/' + group.id }">Update</a> </td>
+    </tr>
+</table>
+
+<form action="#" th:action="@{/task-group/create}" method="get">
+    <input type="submit" value="Create new"/>
+</form>
+
+<form action="#" th:action="@{/task}" method="get">
+    <input type="submit" value="Open task list"/>
+</form>
+
+</body>
+</html>

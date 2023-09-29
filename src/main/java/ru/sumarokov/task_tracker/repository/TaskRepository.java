@@ -1,10 +1,10 @@
-package ru.sumarokov.taskTracker.repository;
+package ru.sumarokov.task_tracker.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.sumarokov.taskTracker.entity.Task;
+import ru.sumarokov.task_tracker.entity.Task;
 
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    List<Task> findAllByNameGroup(String nameGroup);
+    public List<Task> findAllByOrderByIdAsc();
 }

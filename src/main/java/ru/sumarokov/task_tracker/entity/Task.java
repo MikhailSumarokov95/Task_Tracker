@@ -1,10 +1,6 @@
-package ru.sumarokov.taskTracker.entity;
+package ru.sumarokov.task_tracker.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -18,9 +14,14 @@ public class Task {
     private LocalDate dateDeadLine;
     private String text;
     private boolean isCompleted;
-    private String nameGroup;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TaskGroup taskGroup;
 
     public Task() {}
+
+    public Task(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     public Task(Long id, LocalDate dateCreated, LocalDate dateDeadLine, String text, boolean isCompleted, String nameGroup) {
         this.id = id;
@@ -28,7 +29,6 @@ public class Task {
         this.dateDeadLine = dateDeadLine;
         this.text = text;
         this.isCompleted = isCompleted;
-        this.nameGroup = nameGroup;
     }
 
     public Long getId() {
@@ -63,21 +63,17 @@ public class Task {
         this.text = text;
     }
 
-    public boolean isCompleted() {
+    public boolean getIsCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setIsCompleted(boolean completed) {
         isCompleted = completed;
     }
 
-    public String getNameGroup() {
-        return nameGroup;
-    }
+    public TaskGroup getTaskGroup() { return taskGroup; }
 
-    public void setNameGroup(String nameGroup) {
-        this.nameGroup = nameGroup;
-    }
+    public void setTaskGroup(TaskGroup taskGroup) { this.taskGroup = taskGroup; }
 
     @Override
     public String toString() {
@@ -87,7 +83,6 @@ public class Task {
                 ", dateDeadLine=" + dateDeadLine +
                 ", text='" + text + '\'' +
                 ", isCompleted=" + isCompleted +
-                ", nameGroup='" + nameGroup + '\'' +
                 '}';
     }
 }
