@@ -15,6 +15,7 @@ public class Task {
     private String text;
     private boolean isCompleted;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="task_group_id", nullable = false)
     private TaskGroup taskGroup;
 
     public Task() {}
