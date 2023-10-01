@@ -42,7 +42,7 @@ public class TaskController {
 
     @GetMapping("/create")
     public String getTaskCreate(Model model) {
-        model.addAttribute("task", taskService.getEmptyTask());
+        model.addAttribute("task", new Task());
         model.addAttribute("taskGroups", taskGroupService.getTaskGroups());
         return "task/form";
     }

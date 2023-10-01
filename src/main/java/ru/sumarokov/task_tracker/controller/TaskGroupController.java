@@ -38,7 +38,7 @@ public class TaskGroupController {
 
     @GetMapping("/create")
     public String getTaskGroupCreate(Model model) {
-        model.addAttribute("taskGroup", taskGroupService.getEmptyTaskGroup());
+        model.addAttribute("taskGroup", new TaskGroup());
         model.addAttribute("tasks", taskService.getTasks());
         return "task_group/form";
     }

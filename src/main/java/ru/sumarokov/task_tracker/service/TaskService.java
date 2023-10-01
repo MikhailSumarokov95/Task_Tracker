@@ -3,9 +3,9 @@ package ru.sumarokov.task_tracker.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sumarokov.task_tracker.entity.Task;
+import ru.sumarokov.task_tracker.exception.EntityNotFoundException;
 import ru.sumarokov.task_tracker.repository.TaskRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -23,11 +23,7 @@ public class TaskService {
     }
 
     public Task getTask(Long id) {
-        return taskRepository.findById(id).orElseThrow();
-    }
-
-    public Task getEmptyTask() {
-        return new Task(LocalDate.now());
+        return taskRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Task saveTask(Task task) {
