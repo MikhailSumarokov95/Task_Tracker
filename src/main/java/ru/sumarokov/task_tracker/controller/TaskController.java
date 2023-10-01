@@ -1,10 +1,13 @@
 package ru.sumarokov.task_tracker.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.sumarokov.task_tracker.entity.Task;
+import ru.sumarokov.task_tracker.entity.TaskGroup;
 import ru.sumarokov.task_tracker.service.TaskGroupService;
 import ru.sumarokov.task_tracker.service.TaskService;
 
@@ -45,7 +48,12 @@ public class TaskController {
     }
 
     @PostMapping("/save")
-    public String saveTask(@ModelAttribute Task task) {
+    public String saveTask(@ModelAttribute @Valid Task task, BindingResult bindingResult,
+                           Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("taskGroups", taskGroupService.getTaskGroups());
+            return "task/form";
+        }
         taskService.saveTask(task);
         return "redirect:/task";
     }

@@ -11,6 +11,7 @@
 <form action="#" th:action="@{/task/save}" th:object="${task}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <p>Text: <input type="text" th:field="*{text}"/></p>
+    <div style="color:red" th:if="${#fields.hasErrors('text')}" th:errors="*{text}">text error</div>
     <p>Date created: <input type="text" readonly th:field="*{dateCreated}"/></p>
     <p>Date deadline: <input type="text" th:field="*{dateDeadLine}"/></p>
     <p>Is Completed? <input type="checkbox" th:field="*{isCompleted}"/></p>

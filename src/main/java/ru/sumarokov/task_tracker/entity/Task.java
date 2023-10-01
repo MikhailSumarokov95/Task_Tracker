@@ -1,6 +1,9 @@
 package ru.sumarokov.task_tracker.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 @Entity
@@ -12,6 +15,7 @@ public class Task {
     private Long id;
     private LocalDate dateCreated;
     private LocalDate dateDeadLine;
+    @NotEmpty(message = "{size.task.text.notNull}")
     private String text;
     private boolean isCompleted;
     @ManyToOne(fetch = FetchType.LAZY)

@@ -12,7 +12,6 @@ import java.util.List;
 public class TaskGroupService {
 
     private final TaskGroupRepository taskGroupRepository;
-
     private final TaskService taskService;
 
     @Autowired
@@ -33,9 +32,7 @@ public class TaskGroupService {
         return new TaskGroup(-1L, "");
     }
 
-    public TaskGroup saveTaskGroup(TaskGroup taskGroup) {
-        return taskGroupRepository.save(taskGroup);
-    }
+    public TaskGroup saveTaskGroup(TaskGroup taskGroup) { return taskGroupRepository.save(taskGroup); }
 
     public void deleteTaskGroup(Long id) {
         if (id != 1L) taskGroupRepository.deleteById(id);
