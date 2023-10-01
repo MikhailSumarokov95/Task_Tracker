@@ -1,6 +1,7 @@
 package ru.sumarokov.task_tracker.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class TaskGroup {
     @Id
     @GeneratedValue
     private Long id;
+    @NotEmpty(message = "{size.taskGroup.name.notNull}")
     private String name;
     @OneToMany(mappedBy = "taskGroup", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
