@@ -1,35 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>Task group list</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 
-<h1>Task group list</h1>
+<h1 class="text-center">Task group list</h1>
 
-<table border="1">
+<table class="table table-striped">
+    <thead>
     <tr>
-        <th>Name</th>
-        <th>Count of tasks</th>
-        <th>Delete</th>
-        <th>Update</th>
+        <th scope="col">Name</th>
+        <th scope="col">Count of tasks</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Update</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="group : ${taskGroups}">
         <td th:text="${group.name}"></td>
         <td th:text="${group.getCountTasks}"></td>
-        <td> <a th:href="${'/task-group/' + group.id + '/delete' }">Delete</a> </td>
-        <td> <a th:href="${'/task-group/' + group.id }">Update</a> </td>
+        <td> <a th:href="${'/task-group/' + group.id + '/delete' }" class="btn btn-danger btn-lg active">Delete</a> </td>
+        <td> <a th:href="${'/task-group/' + group.id }" class="btn btn-primary btn-lg active">Update</a></td>
     </tr>
+    </tbody>
 </table>
 
-<form action="#" th:action="@{/task-group/create}" method="get">
-    <input type="submit" value="Create new"/>
-</form>
+<div style="text-align: center;">
+    <form action="#" th:action="@{/task-group/create}" method="get">
+        <input type="submit" value="Create new" class="btn btn-success"/>
+    </form>
+    <br>
+    <form action="#" th:action="@{/task}" method="get">
+        <input type="submit" value="Open task list" class="btn btn-primary"/>
+    </form>
+</div>
 
-<form action="#" th:action="@{/task}" method="get">
-    <input type="submit" value="Open task list"/>
-</form>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
 </body>
 </html>
