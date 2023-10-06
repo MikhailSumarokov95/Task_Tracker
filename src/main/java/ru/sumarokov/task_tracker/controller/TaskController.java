@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.sumarokov.task_tracker.entity.Task;
-import ru.sumarokov.task_tracker.entity.TaskGroup;
 import ru.sumarokov.task_tracker.service.TaskGroupService;
 import ru.sumarokov.task_tracker.service.TaskService;
 
