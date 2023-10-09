@@ -26,7 +26,7 @@ public class TaskGroup {
         this.id = -1L;
     }
 
-    public TaskGroup(String name, User user ,Boolean isDefault) {
+    public TaskGroup(String name, User user, Boolean isDefault) {
         this.name = name;
         this.user = user;
         this.isDefault = isDefault;

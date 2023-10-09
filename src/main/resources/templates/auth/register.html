@@ -9,24 +9,39 @@
 
 <h1 class="text-center">Registration</h1>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
+<form action="#" th:action="@{/register}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <div class="col-md-3 text-center">
+        <label class="form-label" for="inputEmail"><b>Email</b></label>
+        <div class="input-group">
+            <input type="text" th:field="*{email}" id="inputEmail" class="form-control" placeholder="Enter email">
         </div>
-        <div class="col-md-8 text-center">
-            <form th:method="POST" th:action="@{/register}" th:object="${user}">
-                <input class="form-control" type="text" th:field="*{username}" placeholder="Имя пользователя"/>
-                <br/>
-                <input class="form-control" type="text" th:field="*{password}" placeholder="Пароль"/>
-                <br/>
-                <br/>
-                <input class="btn btn-primary" type="submit" value="Зарегистрироватся"/>
-            </form>
+        <label class="text-danger" for="inputEmail" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
+    </div>
+    <br>
+    <div class="col-md-3 text-center">
+        <label class="form-label" for="inputUsername"><b>Name</b></label>
+        <div class="input-group">
+            <input type="text" th:field="*{username}" id="inputUsername" class="form-control" placeholder="Enter name">
         </div>
-        <div class="col-md-2">
+        <label class="text-danger" for="inputUsername" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
+    </div>
+    <br>
+    <div class="col-md-3 text-center">
+        <label class="form-label" for="inputPassword"><b>Password</b></label>
+        <div class="input-group">
+            <input type="password" th:field="*{password}" id="inputPassword" class="form-control" placeholder="Enter password">
+        </div>
+        <label class="text-danger" for="inputPassword" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
+    </div>
+    <br>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-md-2">
+            <input type="submit" value="Create" class="btn btn-success">
+            <input type="reset" value="Reset" class="btn btn-danger">
         </div>
     </div>
-</div>
+</form>
 
 <!--/*/ <th:block th:insert="~{bootstrap/tail.html :: tail}">
           </th:block> /*/-->

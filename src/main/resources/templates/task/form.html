@@ -20,8 +20,8 @@
     </div>
     <br>
     <div class="col-md-2">
-        <label for="inputDateDeadLine" class="control-label"><b>Date Deadline</b></label>
-        <select class="form-control" th:field="*{taskGroup}">
+        <label for="taskGroup" class="control-label"><b>Task group</b></label>
+        <select class="form-control" th:field="*{taskGroup}" id="taskGroup">
             <option th:each="group : ${taskGroups}"
                     th:value="${group.id}"
                     th:text="${group.name}">

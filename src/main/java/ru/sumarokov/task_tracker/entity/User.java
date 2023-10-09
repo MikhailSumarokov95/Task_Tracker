@@ -1,6 +1,8 @@
 package ru.sumarokov.task_tracker.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,16 +19,22 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "{size.user.name.notNull}")
     private String username;
+    @NotEmpty(message = "{size.user.password.notNull}")
     private String password;
+    @NotEmpty(message = "{size.user.email.notNull}")
+    @Email(message = "{format.user.email.notCorrectFormat}")
+    private String email;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TaskGroup> taskGroup;
 
     public User() {}
 
-    public User(String username, String password) {
+    public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     @Override
@@ -55,6 +63,10 @@ public class User implements UserDetails {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
 
     public List<TaskGroup> getTaskGroup() { return taskGroup; }
 

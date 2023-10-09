@@ -9,33 +9,36 @@
 
 <h1 class="text-center">Task tracker of you dreams</h1>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-8 text-center">
-            <form th:method="POST" th:action="@{/perform-login}">
-                <input class="form-control" type="text" name="username" placeholder="Имя пользователя"/>
-                <br/>
-                <input class="form-control" type="password" name="password" placeholder="Пароль"/>
-                <br/>
-                <input class="btn btn-primary" type="submit" value="Войти"/>
-            </form>
-        </div>
-        <div class="col-md-2">
+<form action="#" th:action="@{/perform-login}" th:method="post">
+    <div class="col-md-3 text-center">
+        <label class="form-label" for="inputUsername"><b>Name</b></label>
+        <div class="input-group">
+            <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Enter name">
         </div>
     </div>
-    <br/>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 text-center">
-            <a th:href="@{'/register'}">Регистрация</a>
+    <br>
+    <div class="col-md-3 text-center">
+        <label class="form-label" for="inputPassword"><b>Password</b></label>
+        <div class="input-group">
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Enter password">
         </div>
-        <div class="col-md-2"></div>
     </div>
-</div>
+    <br>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-md-2">
+            <input type="submit" value="Enter" class="btn btn-success">
+            <input type="reset" value="Reset" class="btn btn-danger">
+        </div>
+    </div>
+</form>
 
 <div th:if="${param.error}" style="color: red">Неправильные имя или пароль</div>
+
+<form action="#" th:action="@{/register}" method="get">
+    <div class="col-md-6">
+        <input type="submit" value="Register" class="btn btn-secondary btn-lg"/>
+    </div>
+</form>
 
 <!--/*/ <th:block th:insert="~{bootstrap/tail.html :: tail}">
           </th:block> /*/-->

@@ -14,14 +14,12 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepository;
-    private final TaskGroupRepository taskGroupRepository;
     private final AuthService authService;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, TaskGroupRepository taskGroupRepository, AuthService authService) {
+    public TaskService(TaskRepository taskRepository, AuthService authService) {
         this.taskRepository = taskRepository;
         this.authService = authService;
-        this.taskGroupRepository = taskGroupRepository;
     }
 
     public List<Task> getUserTasks() {
