@@ -1,7 +1,17 @@
-DROP TABLE IF EXISTS task_group, task CASCADE;
+DROP TABLE IF EXISTS users, task_group, task CASCADE;
+
+CREATE TABLE IF NOT EXISTS users(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(64) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    CONSTRAINT username_unique UNIQUE (username)
+);
+
 CREATE TABLE IF NOT EXISTS task_group(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(64) NOT NULL
+    name VARCHAR(64) NOT NULL,
+    users_id INTEGER NOT NULL REFERENCES users(id),
+    is_default boolean NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS task(

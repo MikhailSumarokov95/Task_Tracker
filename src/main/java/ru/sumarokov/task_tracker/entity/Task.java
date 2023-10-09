@@ -22,7 +22,10 @@ public class Task {
     @JoinColumn(name="task_group_id", nullable = false)
     private TaskGroup taskGroup;
 
-    public Task() { dateCreated = LocalDate.now(); }
+    public Task() {
+        dateCreated = LocalDate.now();
+        this.id = -1L;
+    }
 
     public Task(Long id, LocalDate dateCreated, LocalDate dateDeadLine, String text, boolean isCompleted, String nameGroup) {
         this.id = id;

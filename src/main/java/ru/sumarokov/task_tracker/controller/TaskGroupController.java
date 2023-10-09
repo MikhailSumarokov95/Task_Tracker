@@ -25,21 +25,21 @@ public class TaskGroupController {
 
     @GetMapping()
     public String getTaskGroup(Model model) {
-        model.addAttribute("taskGroups",taskGroupService.getTaskGroups());
+        model.addAttribute("taskGroups",taskGroupService.getUserTaskGroups());
         return "task_group/list";
     }
 
     @GetMapping("/{id}")
     public String getTaskGroupForm(@PathVariable Long id, Model model) {
         model.addAttribute("taskGroup", taskGroupService.getTaskGroup(id));
-        model.addAttribute("tasks", taskService.getTasks());
+        model.addAttribute("tasks", taskService.getUserTasks());
         return "task_group/form";
     }
 
     @GetMapping("/create")
     public String getTaskGroupCreate(Model model) {
         model.addAttribute("taskGroup", new TaskGroup());
-        model.addAttribute("tasks", taskService.getTasks());
+        model.addAttribute("tasks", taskService.getUserTasks());
         return "task_group/form";
     }
 
@@ -47,7 +47,7 @@ public class TaskGroupController {
     public String saveTaskGroup(@ModelAttribute @Valid TaskGroup taskGroup, BindingResult bindingResult,
                                 Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("tasks", taskService.getTasks());
+            model.addAttribute("tasks", taskService.getUserTasks());
             return "task_group/form";
         }
         taskGroupService.saveTaskGroup(taskGroup);
