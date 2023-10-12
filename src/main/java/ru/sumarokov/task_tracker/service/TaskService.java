@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sumarokov.task_tracker.entity.Task;
 import ru.sumarokov.task_tracker.exception.EntityNotFoundException;
-import ru.sumarokov.task_tracker.exception.NotAccessException;
-import ru.sumarokov.task_tracker.repository.TaskGroupRepository;
+import ru.sumarokov.task_tracker.exception.AccesDeniedException;
 import ru.sumarokov.task_tracker.repository.TaskRepository;
 
 import java.util.List;
@@ -22,15 +21,15 @@ public class TaskService {
         this.authService = authService;
     }
 
-    public List<Task> getUserTasks() {
-        return taskRepository.findByTaskGroupUserOrderByIdAsc(authService.getUser());
+    public List<Task> getUserTasks(Long id) {
+        return taskRepository.findByTaskGroupUserIdOrderByIdAsc(id);
     }
 
     public Task getTask(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         if (task.getTaskGroup().getUser() != authService.getUser())
-            throw new NotAccessException();
+            throw new AccesDeniedException();
         return task;
     }
 
@@ -41,7 +40,7 @@ public class TaskService {
             Task oldTask = taskRepository.findById(task.getId())
                     .orElseThrow(EntityNotFoundException::new);
             if (oldTask.getTaskGroup().getUser() != authService.getUser()) {
-                throw new NotAccessException();
+                throw new AccesDeniedException();
             } else {
                 taskRepository.save(task);
             }
@@ -52,7 +51,7 @@ public class TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         if (task.getTaskGroup().getUser() != authService.getUser())
-            throw new NotAccessException();
+            throw new AccesDeniedException();
         taskRepository.deleteById(id);
     }
 }

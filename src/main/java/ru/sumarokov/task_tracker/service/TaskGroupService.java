@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.sumarokov.task_tracker.entity.Task;
 import ru.sumarokov.task_tracker.entity.TaskGroup;
 import ru.sumarokov.task_tracker.exception.EntityNotFoundException;
-import ru.sumarokov.task_tracker.exception.NotAccessException;
+import ru.sumarokov.task_tracker.exception.AccesDeniedException;
 import ru.sumarokov.task_tracker.repository.TaskGroupRepository;
 
 import java.util.List;
@@ -24,14 +24,14 @@ public class TaskGroupService {
         this.authService = authService;
     }
 
-    public List<TaskGroup> getUserTaskGroups() {
-        return taskGroupRepository.findByUserOrderByIdAsc(authService.getUser());
+    public List<TaskGroup> getUserTaskGroups(Long id) {
+        return taskGroupRepository.findByUserIdOrderByIdAsc(id);
     }
 
     public TaskGroup getTaskGroup(Long id) {
         TaskGroup taskGroup = taskGroupRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        if (taskGroup.getUser() != authService.getUser()) throw new NotAccessException();
+        if (taskGroup.getUser() != authService.getUser()) throw new AccesDeniedException();
         return taskGroup;
     }
 
@@ -43,7 +43,7 @@ public class TaskGroupService {
             TaskGroup oldTask = taskGroupRepository.findById(taskGroup.getId())
                     .orElseThrow(EntityNotFoundException::new);
             if (oldTask.getUser() != authService.getUser()) {
-                throw new NotAccessException();
+                throw new AccesDeniedException();
             } else {
                 taskGroupRepository.save(taskGroup);
             }
@@ -54,7 +54,7 @@ public class TaskGroupService {
         TaskGroup taskGroup = taskGroupRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         if (taskGroup.isDefault() || taskGroup.getUser() != authService.getUser())
-            throw new NotAccessException();
+            throw new AccesDeniedException();
         else taskGroupRepository.deleteById(id);
     }
 
@@ -66,7 +66,7 @@ public class TaskGroupService {
                 .orElseThrow(EntityNotFoundException::new);
 
         if (newTaskGroup.getUser() != authService.getUser() || oldTaskGroup.getUser() != authService.getUser())
-            throw new NotAccessException();
+            throw new AccesDeniedException();
 
         task.setTaskGroup(newTaskGroup);
         taskService.saveTask(task);

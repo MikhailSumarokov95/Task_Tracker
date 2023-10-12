@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.sumarokov.task_tracker.entity.TaskGroup;
+import ru.sumarokov.task_tracker.entity.User;
+import ru.sumarokov.task_tracker.service.AuthService;
 import ru.sumarokov.task_tracker.service.TaskGroupService;
 import ru.sumarokov.task_tracker.service.TaskService;
 
@@ -16,30 +18,35 @@ public class TaskGroupController {
 
     private final TaskService taskService;
     private final TaskGroupService taskGroupService;
+    private final AuthService authService;
 
     @Autowired
-    public TaskGroupController(TaskService taskService, TaskGroupService taskGroupService) {
+    public TaskGroupController(TaskService taskService, TaskGroupService taskGroupService, AuthService authService) {
         this.taskService = taskService;
         this.taskGroupService = taskGroupService;
+        this.authService = authService;
     }
 
     @GetMapping()
     public String getTaskGroup(Model model) {
-        model.addAttribute("taskGroups",taskGroupService.getUserTaskGroups());
+        User user = authService.getUser();
+        model.addAttribute("taskGroups",taskGroupService.getUserTaskGroups(user.getId()));
         return "task_group/list";
     }
 
     @GetMapping("/{id}")
     public String getTaskGroupForm(@PathVariable Long id, Model model) {
         model.addAttribute("taskGroup", taskGroupService.getTaskGroup(id));
-        model.addAttribute("tasks", taskService.getUserTasks());
+        User user = authService.getUser();
+        model.addAttribute("tasks", taskService.getUserTasks(user.getId()));
         return "task_group/form";
     }
 
     @GetMapping("/create")
     public String getTaskGroupCreate(Model model) {
         model.addAttribute("taskGroup", new TaskGroup());
-        model.addAttribute("tasks", taskService.getUserTasks());
+        User user = authService.getUser();
+        model.addAttribute("tasks", taskService.getUserTasks(user.getId()));
         return "task_group/form";
     }
 
@@ -47,7 +54,8 @@ public class TaskGroupController {
     public String saveTaskGroup(@ModelAttribute @Valid TaskGroup taskGroup, BindingResult bindingResult,
                                 Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("tasks", taskService.getUserTasks());
+            User user = authService.getUser();
+            model.addAttribute("tasks", taskService.getUserTasks(user.getId()));
             return "task_group/form";
         }
         taskGroupService.saveTaskGroup(taskGroup);

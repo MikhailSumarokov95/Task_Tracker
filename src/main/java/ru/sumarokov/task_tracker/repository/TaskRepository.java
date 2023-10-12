@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    List<Task> findByTaskGroupUserOrderByIdAsc(User user);
+    List<Task> findByTaskGroupUserIdOrderByIdAsc(Long user_id);
 }
