@@ -15,7 +15,7 @@ public class Task {
     private Long id;
     private LocalDate dateCreated;
     private LocalDate dateDeadLine;
-    @NotEmpty(message = "{size.task.text.notNull}")
+    @NotEmpty(message = "Поле \"Текс\" должно быть заполнено")
     private String text;
     private boolean isCompleted;
     @ManyToOne(fetch = FetchType.LAZY)

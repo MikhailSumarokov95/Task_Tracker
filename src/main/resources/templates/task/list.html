@@ -6,19 +6,21 @@
     <title>Task list</title>
     </head>
 <body>
-
-<h1 class="text-center">Task list</h1>
+<!--/*/ <th:block th:insert="~{bootstrap/navbar.html :: navbar}">
+          </th:block> /*/-->
+<br>
+<h1 class="text-center">Список задач</h1>
 
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">Text</th>
-        <th scope="col">Date created</th>
-        <th scope="col">Date deadline</th>
-        <th scope="col">Status</th>
-        <th scope="col">Name group</th>
-        <th scope="col">Delete</th>
-        <th scope="col">Update</th>
+        <th scope="col">Текст</th>
+        <th scope="col">Дата создания</th>
+        <th scope="col">Крайний срок</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Имя группы</th>
+        <th scope="col">Удалить</th>
+        <th scope="col">Изменить</th>
     </tr>
     </thead>
     <tbody>
@@ -26,21 +28,17 @@
         <td th:text="${task.text}"></td>
         <td th:text="${task.dateCreated}"></td>
         <td th:text="${task.dateDeadLine}"></td>
-        <td th:text="${task.isCompleted} ? 'Completed' : 'Did Not Completed'"></td>
+        <td th:text="${task.isCompleted} ? 'Закончено' : 'Не закончено'"></td>
         <td th:text="${task.taskGroup.name}"></td>
-        <td><a th:href="${'/task/' + task.id + '/delete' }" class="btn btn-danger btn-lg active">Delete</a></td>
-        <td><a th:href="${'/task/' + task.id }" class="btn btn-primary btn-lg active">Update</a></td>
+        <td><a th:href="${'/task/' + task.id + '/delete' }" class="btn btn-danger btn-lg active">Удалить</a></td>
+        <td><a th:href="${'/task/' + task.id }" class="btn btn-primary btn-lg active">Изменить</a></td>
     </tr>
     </tbody>
 </table>
 
 <div style="text-align: center;">
     <form action="#" th:action="@{/task/create}" method="get">
-        <input type="submit" value="Create" class="btn btn-success"/>
-    </form>
-    <br>
-    <form action="#" th:action="@{/task-group}" method="get">
-        <input type="submit" value="Open task group" class="btn btn-primary"/>
+        <input type="submit" value="Добавить задачу" class="btn btn-success btn-lg active"/>
     </form>
 </div>
 

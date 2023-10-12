@@ -19,12 +19,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "{size.user.name.notNull}")
+    @NotEmpty(message = "Поле \"Имя\" должно быть заполнено")
     private String username;
-    @NotEmpty(message = "{size.user.password.notNull}")
+    @NotEmpty(message = "Поле \"Пароль\" должно быть заполнено")
     private String password;
-    @NotEmpty(message = "{size.user.email.notNull}")
-    @Email(message = "{format.user.email.notCorrectFormat}")
+    @NotEmpty(message = "Поле \"Электронный адрес\" должно быть заполнено")
+    @Email(message = "Неверный формат электронной почты")
     private String email;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TaskGroup> taskGroup;

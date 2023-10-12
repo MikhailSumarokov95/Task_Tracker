@@ -13,7 +13,7 @@ public class TaskGroup {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty(message = "{size.taskGroup.name.notNull}")
+    @NotEmpty(message = "Поле \"Имя\" должно быть заполнено")
     private String name;
     @OneToMany(mappedBy = "taskGroup", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();

@@ -6,35 +6,33 @@
     <title>Task group list</title>
     </head>
 <body>
-
-<h1 class="text-center">Task group list</h1>
+<!--/*/ <th:block th:insert="~{bootstrap/navbar.html :: navbar}">
+          </th:block> /*/-->
+<br>
+<h1 class="text-center">Список групп задач</h1>
 
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Count of tasks</th>
-        <th scope="col">Delete</th>
-        <th scope="col">Update</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Количество задач</th>
+        <th scope="col">Удалить</th>
+        <th scope="col">Изменить</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="group : ${taskGroups}">
         <td th:text="${group.name}"></td>
         <td th:text="${group.getCountTasks}"></td>
-        <td> <a th:href="${'/task-group/' + group.id + '/delete' }" class="btn btn-danger btn-lg active">Delete</a> </td>
-        <td> <a th:href="${'/task-group/' + group.id }" class="btn btn-primary btn-lg active">Update</a></td>
+        <td> <a th:href="${'/task-group/' + group.id + '/delete' }" class="btn btn-danger btn-lg active">Удалить</a> </td>
+        <td> <a th:href="${'/task-group/' + group.id }" class="btn btn-primary btn-lg active">Изменить</a></td>
     </tr>
     </tbody>
 </table>
 
 <div style="text-align: center;">
     <form action="#" th:action="@{/task-group/create}" method="get">
-        <input type="submit" value="Create new" class="btn btn-success"/>
-    </form>
-    <br>
-    <form action="#" th:action="@{/task}" method="get">
-        <input type="submit" value="Open task list" class="btn btn-primary"/>
+        <input type="submit" value="Добавить группу" class="btn btn-success btn-lg active"/>
     </form>
 </div>
 
