@@ -11,18 +11,20 @@ import java.time.LocalDate;
 public class Task {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateCreated;
     private LocalDate dateDeadLine;
-    @NotEmpty(message = "{size.task.text.notNull}")
+    @NotEmpty(message = "Поле \"Текс\" должно быть заполнено")
     private String text;
     private boolean isCompleted;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="task_group_id", nullable = false)
     private TaskGroup taskGroup;
 
-    public Task() { dateCreated = LocalDate.now(); }
+    public Task() {
+        dateCreated = LocalDate.now();
+    }
 
     public Task(Long id, LocalDate dateCreated, LocalDate dateDeadLine, String text, boolean isCompleted, String nameGroup) {
         this.id = id;

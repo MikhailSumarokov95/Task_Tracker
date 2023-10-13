@@ -11,20 +11,27 @@ import java.util.List;
 public class TaskGroup {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "{size.taskGroup.name.notNull}")
+    @NotEmpty(message = "Поле \"Имя\" должно быть заполнено")
     private String name;
     @OneToMany(mappedBy = "taskGroup", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="users_id", nullable = false)
+    private User user;
+    private boolean isDefault;
 
-    public TaskGroup() {
-        this.id = -1L;
+    public TaskGroup() {}
+
+    public TaskGroup(User user) {
+        this.user = user;
     }
 
-    public TaskGroup(Long id, String name) {
-        this.id = id;
+    public TaskGroup(String name, User user, Boolean isDefault) {
         this.name = name;
+        this.user = user;
+        this.isDefault = isDefault;
     }
 
     public Long getId() {
@@ -52,6 +59,14 @@ public class TaskGroup {
     }
 
     public int getCountTasks() { return tasks.size(); }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
+
+    public boolean isDefault() { return isDefault; }
+
+    public void setDefault(boolean isDefault) { this.isDefault = isDefault; }
 
     @Override
     public String toString() {

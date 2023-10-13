@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sumarokov.task_tracker.entity.Task;
 import ru.sumarokov.task_tracker.exception.EntityNotFoundException;
+import ru.sumarokov.task_tracker.exception.AccessDeniedException;
 import ru.sumarokov.task_tracker.repository.TaskRepository;
 
 import java.util.List;
@@ -12,25 +13,45 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final AuthService authService;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository, AuthService authService) {
         this.taskRepository = taskRepository;
+        this.authService = authService;
     }
 
-    public List<Task> getTasks() {
-        return taskRepository.findAllByOrderByIdAsc();
+    public List<Task> getUserTasks(Long id) {
+        return taskRepository.findByTaskGroupUserIdOrderByIdAsc(id);
     }
 
     public Task getTask(Long id) {
-        return taskRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Task task = taskRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        if (task.getTaskGroup().getUser() != authService.getUser())
+            throw new AccessDeniedException();
+        return task;
     }
 
-    public Task saveTask(Task task) {
-        return taskRepository.save(task);
+    public void saveTask(Task task) {
+        if (task.getId() == null) {
+            taskRepository.save(task);
+        } else {
+            Task oldTask = taskRepository.findById(task.getId())
+                    .orElseThrow(EntityNotFoundException::new);
+            if (oldTask.getTaskGroup().getUser() != authService.getUser()) {
+                throw new AccessDeniedException();
+            } else {
+                taskRepository.save(task);
+            }
+        }
     }
 
     public void deleteTask(Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        if (task.getTaskGroup().getUser() != authService.getUser())
+            throw new AccessDeniedException();
         taskRepository.deleteById(id);
     }
 }
