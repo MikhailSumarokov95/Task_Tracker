@@ -12,6 +12,7 @@
 <form action="#" th:action="@{/task-group/save}" th:object="${taskGroup}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <input type="hidden" th:field="*{tasks}"/>
+    <input type="hidden" th:field="*{user}"/>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-4 text-center">
@@ -33,33 +34,34 @@
     </div>
 </form>
 <br>
-<h2 class="text-center" th:if="${taskGroup.id != -1}">Список задач</h2>
-<br>
-<table class="table table-striped" th:if="${taskGroup.id != -1}">
-    <thead>
-    <tr>
-        <th scope="col">Текст</th>
-        <th scope="col">Дата создания</th>
-        <th scope="col">Крайний срок</th>
-        <th scope="col">Статус</th>
-        <th scope="col">Имя группы</th>
-        <th scope="col">Добавить в группу</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="task : ${tasks}">
-        <td th:text="${task.text}"></td>
-        <td th:text="${task.dateCreated}"></td>
-        <td th:text="${task.dateDeadLine}"></td>
-        <td th:text="${task.isCompleted} ? 'Закончено' : 'Не закончено'"></td>
-        <td th:text="${task.taskGroup.name}"></td>
-        <td><a th:if="${task.taskGroup != taskGroup}"
-               th:href="@{'/task-group/' + ${taskGroup.id} + '/add-task/' + ${task.id}}"
-               class="btn btn-primary active">Добавить в группу</a></td>
-    </tr>
-    </tbody>
-</table>
-
+<a th:if="${taskGroup.id != null}">
+    <h2 class="text-center">Список задач</h2>
+    <br>
+    <table class="table table-striped" >
+        <thead>
+        <tr>
+            <th scope="col">Текст</th>
+            <th scope="col">Дата создания</th>
+            <th scope="col">Крайний срок</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Имя группы</th>
+            <th scope="col">Добавить в группу</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.text}"></td>
+            <td th:text="${task.dateCreated}"></td>
+            <td th:text="${task.dateDeadLine}"></td>
+            <td th:text="${task.isCompleted} ? 'Закончено' : 'Не закончено'"></td>
+            <td th:text="${task.taskGroup.name}"></td>
+            <td><a th:if="${task.taskGroup != taskGroup}"
+                   th:href="@{'/task-group/' + ${taskGroup.id} + '/add-task/' + ${task.id}}"
+                   class="btn btn-primary active">Добавить в группу</a></td>
+        </tr>
+        </tbody>
+    </table>
+</a>
 <!--/*/ <th:block th:insert="~{bootstrap/tail.html :: tail}">
           </th:block> /*/-->
 </body>

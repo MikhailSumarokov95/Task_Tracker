@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sumarokov.task_tracker.entity.Task;
 import ru.sumarokov.task_tracker.entity.TaskGroup;
+import ru.sumarokov.task_tracker.entity.User;
 import ru.sumarokov.task_tracker.exception.EntityNotFoundException;
-import ru.sumarokov.task_tracker.exception.AccesDeniedException;
+import ru.sumarokov.task_tracker.exception.AccessDeniedException;
 import ru.sumarokov.task_tracker.repository.TaskGroupRepository;
 
 import java.util.List;
@@ -31,30 +32,24 @@ public class TaskGroupService {
     public TaskGroup getTaskGroup(Long id) {
         TaskGroup taskGroup = taskGroupRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        if (taskGroup.getUser() != authService.getUser()) throw new AccesDeniedException();
+        if (taskGroup.getUser() != authService.getUser()) throw new AccessDeniedException();
         return taskGroup;
     }
 
+    //TODO: сделать кастомный валидатор
     public void saveTaskGroup(TaskGroup taskGroup) {
-        if (taskGroup.getId() == -1L) {
-            taskGroup.setUser(authService.getUser());
-            taskGroupRepository.save(taskGroup);
-        } else {
-            TaskGroup oldTask = taskGroupRepository.findById(taskGroup.getId())
-                    .orElseThrow(EntityNotFoundException::new);
-            if (oldTask.getUser() != authService.getUser()) {
-                throw new AccesDeniedException();
-            } else {
-                taskGroupRepository.save(taskGroup);
-            }
-        }
+        if (taskGroup.getId() != null)
+            taskGroupRepository.findByIdAndUserId(taskGroup.getId(), authService.getUser().getId())
+                    .orElseThrow(() -> new AccessDeniedException("Недостаточно прав для данной операции"));
+
+        taskGroupRepository.save(taskGroup);
     }
 
-    public void deleteTaskGroup(Long id)  {
+    public void deleteTaskGroup(Long id) {
         TaskGroup taskGroup = taskGroupRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         if (taskGroup.isDefault() || taskGroup.getUser() != authService.getUser())
-            throw new AccesDeniedException();
+            throw new AccessDeniedException();
         else taskGroupRepository.deleteById(id);
     }
 
@@ -66,7 +61,7 @@ public class TaskGroupService {
                 .orElseThrow(EntityNotFoundException::new);
 
         if (newTaskGroup.getUser() != authService.getUser() || oldTaskGroup.getUser() != authService.getUser())
-            throw new AccesDeniedException();
+            throw new AccessDeniedException();
 
         task.setTaskGroup(newTaskGroup);
         taskService.saveTask(task);

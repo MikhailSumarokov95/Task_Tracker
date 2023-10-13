@@ -8,7 +8,7 @@
 <div th:fragment="navbar">
     <nav class="navbar navbar-expand bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="#">Трекер задач</a>
+            <a class="navbar-brand text-white">Трекер задач</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Переключатель навигации">
@@ -25,6 +25,9 @@
                     </li>
                 </ul>
             </div>
+            <form class="d-flex" th:action="@{/login}">
+                <button class="btn btn-outline-success text-white" type="submit">Выход</button>
+            </form>
         </div>
     </nav>
 </div>

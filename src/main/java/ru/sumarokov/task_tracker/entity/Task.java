@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class Task {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateCreated;
     private LocalDate dateDeadLine;
@@ -24,7 +24,6 @@ public class Task {
 
     public Task() {
         dateCreated = LocalDate.now();
-        this.id = -1L;
     }
 
     public Task(Long id, LocalDate dateCreated, LocalDate dateDeadLine, String text, boolean isCompleted, String nameGroup) {

@@ -44,8 +44,8 @@ public class TaskGroupController {
 
     @GetMapping("/create")
     public String getTaskGroupCreate(Model model) {
-        model.addAttribute("taskGroup", new TaskGroup());
         User user = authService.getUser();
+        model.addAttribute("taskGroup", new TaskGroup(user));
         model.addAttribute("tasks", taskService.getUserTasks(user.getId()));
         return "task_group/form";
     }

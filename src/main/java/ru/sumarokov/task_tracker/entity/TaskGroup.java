@@ -11,7 +11,7 @@ import java.util.List;
 public class TaskGroup {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Поле \"Имя\" должно быть заполнено")
     private String name;
@@ -22,8 +22,10 @@ public class TaskGroup {
     private User user;
     private boolean isDefault;
 
-    public TaskGroup() {
-        this.id = -1L;
+    public TaskGroup() {}
+
+    public TaskGroup(User user) {
+        this.user = user;
     }
 
     public TaskGroup(String name, User user, Boolean isDefault) {

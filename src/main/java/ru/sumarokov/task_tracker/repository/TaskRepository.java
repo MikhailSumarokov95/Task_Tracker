@@ -5,6 +5,7 @@ import ru.sumarokov.task_tracker.entity.Task;
 import ru.sumarokov.task_tracker.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
