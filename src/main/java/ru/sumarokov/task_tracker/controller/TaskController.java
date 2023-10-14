@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.sumarokov.task_tracker.entity.Task;
 import ru.sumarokov.task_tracker.entity.User;
+import ru.sumarokov.task_tracker.exception.AccessDeniedException;
 import ru.sumarokov.task_tracker.service.AuthService;
 import ru.sumarokov.task_tracker.service.TaskGroupService;
 import ru.sumarokov.task_tracker.service.TaskService;
@@ -69,5 +70,10 @@ public class TaskController {
     public String deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return "redirect:/task";
+    }
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public String handleAccessDeniedException(AccessDeniedException accessDeniedException) {
+        return "exception/accessDenied";
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.sumarokov.task_tracker.entity.TaskGroup;
 import ru.sumarokov.task_tracker.entity.User;
+import ru.sumarokov.task_tracker.exception.AccessDeniedException;
 import ru.sumarokov.task_tracker.service.AuthService;
 import ru.sumarokov.task_tracker.service.TaskGroupService;
 import ru.sumarokov.task_tracker.service.TaskService;
@@ -72,5 +73,10 @@ public class TaskGroupController {
     public String addTaskToGroup(@PathVariable Long taskId, @PathVariable Long taskGroupId) {
         taskGroupService.addTaskToGroup(taskId, taskGroupId);
         return "redirect:/task-group/" + taskGroupId;
+    }
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public String handleAccessDeniedException(AccessDeniedException accessDeniedException) {
+        return "exception/accessDenied";
     }
 }
