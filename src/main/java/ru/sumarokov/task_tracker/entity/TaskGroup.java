@@ -64,7 +64,7 @@ public class TaskGroup {
 
     public void setUser(User user) { this.user = user; }
 
-    public boolean isDefault() { return isDefault; }
+    public boolean getIsDefault() { return isDefault; }
 
     public void setDefault(boolean isDefault) { this.isDefault = isDefault; }
 

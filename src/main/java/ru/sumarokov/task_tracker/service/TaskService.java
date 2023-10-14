@@ -3,7 +3,6 @@ package ru.sumarokov.task_tracker.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sumarokov.task_tracker.entity.Task;
-import ru.sumarokov.task_tracker.exception.EntityNotFoundException;
 import ru.sumarokov.task_tracker.exception.AccessDeniedException;
 import ru.sumarokov.task_tracker.repository.TaskRepository;
 
@@ -26,32 +25,19 @@ public class TaskService {
     }
 
     public Task getTask(Long id) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        if (task.getTaskGroup().getUser() != authService.getUser())
-            throw new AccessDeniedException();
-        return task;
+         return taskRepository.findByIdAndTaskGroupUserId(id, authService.getUser().getId())
+                .orElseThrow(() -> new AccessDeniedException("Недостаточно прав для данной операции"));
     }
 
     public void saveTask(Task task) {
-        if (task.getId() == null) {
-            taskRepository.save(task);
-        } else {
-            Task oldTask = taskRepository.findById(task.getId())
-                    .orElseThrow(EntityNotFoundException::new);
-            if (oldTask.getTaskGroup().getUser() != authService.getUser()) {
-                throw new AccessDeniedException();
-            } else {
-                taskRepository.save(task);
-            }
-        }
+        if (task.getId() != null)
+            taskRepository.findByIdAndTaskGroupUserId(task.getId(), authService.getUser().getId())
+                    .orElseThrow(() -> new AccessDeniedException("Недостаточно прав для данной операции"));
+        taskRepository.save(task);
     }
 
     public void deleteTask(Long id) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        if (task.getTaskGroup().getUser() != authService.getUser())
-            throw new AccessDeniedException();
-        taskRepository.deleteById(id);
+        if (taskRepository.deleteByIdAndTaskGroupUserId(id, authService.getUser().getId()) == 0)
+            throw new AccessDeniedException("Недостаточно прав для данной операции");
     }
 }

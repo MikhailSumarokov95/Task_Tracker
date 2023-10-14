@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sumarokov.task_tracker.entity.Task;
 import ru.sumarokov.task_tracker.entity.TaskGroup;
-import ru.sumarokov.task_tracker.entity.User;
-import ru.sumarokov.task_tracker.exception.EntityNotFoundException;
 import ru.sumarokov.task_tracker.exception.AccessDeniedException;
 import ru.sumarokov.task_tracker.repository.TaskGroupRepository;
 
@@ -30,38 +28,29 @@ public class TaskGroupService {
     }
 
     public TaskGroup getTaskGroup(Long id) {
-        TaskGroup taskGroup = taskGroupRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        if (taskGroup.getUser() != authService.getUser()) throw new AccessDeniedException();
-        return taskGroup;
+        return taskGroupRepository.findByIdAndUserId(id, authService.getUser().getId())
+                .orElseThrow(() -> new AccessDeniedException("Недостаточно прав для данной операции"));
     }
 
-    //TODO: сделать кастомный валидатор
     public void saveTaskGroup(TaskGroup taskGroup) {
         if (taskGroup.getId() != null)
             taskGroupRepository.findByIdAndUserId(taskGroup.getId(), authService.getUser().getId())
                     .orElseThrow(() -> new AccessDeniedException("Недостаточно прав для данной операции"));
-
         taskGroupRepository.save(taskGroup);
     }
 
     public void deleteTaskGroup(Long id) {
-        TaskGroup taskGroup = taskGroupRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        if (taskGroup.isDefault() || taskGroup.getUser() != authService.getUser())
-            throw new AccessDeniedException();
-        else taskGroupRepository.deleteById(id);
+        if (taskGroupRepository.deleteByIdAndUserIdAndIsDefaultFalse(id, authService.getUser().getId()) == 0)
+            throw new AccessDeniedException("Недостаточно прав для данной операции");
     }
 
-    public void addTaskToGroup(Long taskId, Long taskGroupId) {
+    public void addTaskToGroup(Long taskId, Long newTaskGroupId) {
         Task task = taskService.getTask(taskId);
-        TaskGroup oldTaskGroup = taskGroupRepository.findById(task.getTaskGroup().getId())
-                .orElseThrow(EntityNotFoundException::new);
-        TaskGroup newTaskGroup = taskGroupRepository.findById(taskGroupId)
-                .orElseThrow(EntityNotFoundException::new);
-
-        if (newTaskGroup.getUser() != authService.getUser() || oldTaskGroup.getUser() != authService.getUser())
-            throw new AccessDeniedException();
+        Long userId = authService.getUser().getId();
+        taskGroupRepository.findByIdAndUserId(task.getTaskGroup().getId(), userId)
+                .orElseThrow(() -> new AccessDeniedException("Недостаточно прав для данной операции"));
+        TaskGroup newTaskGroup = taskGroupRepository.findByIdAndUserId(newTaskGroupId, userId)
+                .orElseThrow(() -> new AccessDeniedException("Недостаточно прав для данной операции"));
 
         task.setTaskGroup(newTaskGroup);
         taskService.saveTask(task);
