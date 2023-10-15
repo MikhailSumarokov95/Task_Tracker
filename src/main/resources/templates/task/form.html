@@ -54,6 +54,8 @@
                     <input type="text" th:field="*{dateDeadLine}" id="inputDateDeadLine" class="form-control"
                            placeholder="Введите крайник срок">
                 </div>
+                <label class="text-danger" for="inputDateDeadLine" th:if="${#fields.hasErrors('dateDeadLine')}"
+                       th:errors="*{dateDeadLine}"></label>
             </div>
         </div>
         <br>
