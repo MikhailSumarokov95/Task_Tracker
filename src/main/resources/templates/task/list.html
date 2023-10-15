@@ -4,37 +4,39 @@
     <!--/*/ <th:block th:insert="~{bootstrap/head.html :: head}">
           </th:block> /*/-->
     <title>Task list</title>
-    </head>
+</head>
 <body>
 <!--/*/ <th:block th:insert="~{bootstrap/navbar.html :: navbar}">
           </th:block> /*/-->
 <br>
 <h1 class="text-center">Список задач</h1>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">Текст</th>
-        <th scope="col">Дата создания</th>
-        <th scope="col">Крайний срок</th>
-        <th scope="col">Статус</th>
-        <th scope="col">Имя группы</th>
-        <th scope="col">Удалить</th>
-        <th scope="col">Изменить</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="task : ${tasks}">
-        <td th:text="${task.text}"></td>
-        <td th:text="${task.dateCreated}"></td>
-        <td th:text="${task.dateDeadLine}"></td>
-        <td th:text="${task.isCompleted} ? 'Закончено' : 'Не закончено'"></td>
-        <td th:text="${task.taskGroup.name}"></td>
-        <td><a th:href="${'/task/' + task.id + '/delete' }" class="btn btn-danger btn-lg active">Удалить</a></td>
-        <td><a th:href="${'/task/' + task.id }" class="btn btn-primary btn-lg active">Изменить</a></td>
-    </tr>
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-striped table-responsive">
+        <thead>
+        <tr>
+            <th scope="col">Текст</th>
+            <th scope="col">Дата создания</th>
+            <th scope="col">Крайний срок</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Имя группы</th>
+            <th scope="col">Удалить</th>
+            <th scope="col">Изменить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.text}"></td>
+            <td th:text="${task.dateCreated}"></td>
+            <td th:text="${task.dateDeadLine}"></td>
+            <td th:text="${task.isCompleted} ? 'Закончено' : 'Не закончено'"></td>
+            <td th:text="${task.taskGroup.name}"></td>
+            <td><a th:href="${'/task/' + task.id + '/delete' }" class="btn btn-danger btn-lg active">Удалить</a></td>
+            <td><a th:href="${'/task/' + task.id }" class="btn btn-primary btn-lg active">Изменить</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <div style="text-align: center;">
     <form action="#" th:action="@{/task/create}" method="get">

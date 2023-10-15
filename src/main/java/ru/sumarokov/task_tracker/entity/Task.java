@@ -1,6 +1,8 @@
 package ru.sumarokov.task_tracker.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,6 +16,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateCreated;
+    @Future(message = "Крайник срок быть датой из будущего")
     private LocalDate dateDeadLine;
     @NotEmpty(message = "Поле \"Текс\" должно быть заполнено")
     private String text;
