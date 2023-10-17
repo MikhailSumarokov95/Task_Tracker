@@ -72,6 +72,12 @@ public class TaskController {
         return "redirect:/task";
     }
 
+    @GetMapping("/{id}/complete")
+    public String completeTask(@PathVariable Long id) {
+        taskService.completeTask(id);
+        return "redirect:/task";
+    }
+
     @ExceptionHandler({AccessDeniedException.class})
     public String handleAccessDeniedException(AccessDeniedException accessDeniedException) {
         return "exception/accessDenied";

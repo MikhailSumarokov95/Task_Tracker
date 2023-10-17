@@ -16,7 +16,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateCreated;
-    @Future(message = "Крайник срок быть датой из будущего")
+    @Future(message = "Крайник срок должен быть датой из будущего")
     private LocalDate dateDeadLine;
     @NotEmpty(message = "Поле \"Текс\" должно быть заполнено")
     private String text;

@@ -49,7 +49,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="task : ${tasks}">
+        <tr th:each="task : ${tasks}" th:class="${task.isCompleted} ? table-success : ''">
             <td th:text="${task.text}"></td>
             <td th:text="${task.dateCreated}"></td>
             <td th:text="${task.dateDeadLine}"></td>

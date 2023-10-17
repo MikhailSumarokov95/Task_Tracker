@@ -21,11 +21,11 @@ public class TaskService {
     }
 
     public List<Task> getUserTasks(Long id) {
-        return taskRepository.findByTaskGroupUserIdOrderByIdAsc(id);
+        return taskRepository.findByTaskGroupUserIdOrderByIsCompletedAscDateDeadLineAsc(id);
     }
 
     public Task getTask(Long id) {
-         return taskRepository.findByIdAndTaskGroupUserId(id, authService.getUser().getId())
+        return taskRepository.findByIdAndTaskGroupUserId(id, authService.getUser().getId())
                 .orElseThrow(() -> new AccessDeniedException("Недостаточно прав для данной операции"));
     }
 
@@ -39,5 +39,12 @@ public class TaskService {
     public void deleteTask(Long id) {
         if (taskRepository.deleteByIdAndTaskGroupUserId(id, authService.getUser().getId()) == 0)
             throw new AccessDeniedException("Недостаточно прав для данной операции");
+    }
+
+    public void completeTask(Long id) {
+        Task task = taskRepository.findByIdAndTaskGroupUserId(id, authService.getUser().getId())
+                .orElseThrow(() -> new AccessDeniedException("Недостаточно прав для данной операции"));
+        task.setIsCompleted(true);
+        taskRepository.save(task);
     }
 }
