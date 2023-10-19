@@ -16,35 +16,81 @@
         <thead>
         <tr>
             <th scope="col">Текст</th>
-            <th scope="col">Дата создания</th>
             <th scope="col">Крайний срок</th>
-            <th scope="col">Статус</th>
             <th scope="col">Имя группы</th>
-            <th scope="col">Изменить</th>
-            <th scope="col">Завершить</th>
-            <th scope="col">Удалить</th>
+            <th scope="col">
+                <div style="text-align: center;">Изменить</div>
+            </th>
+            <th scope="col">
+                <div style="text-align: center;">Завершить</div>
+            </th>
+            <th scope="col">
+                <div style="text-align: center;">Удалить</div>
+            </th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="task : ${tasks}" th:class="${task.isCompleted} ? table-success : '' ">
             <td th:text="${task.text}"></td>
-            <td th:text="${task.dateCreated}"></td>
             <td th:text="${task.dateDeadLine}"></td>
-            <td th:text="${task.isCompleted} ? 'Закончено' : 'Не закончено'"></td>
             <td th:text="${task.taskGroup.name}"></td>
-            <td><a th:href="${'/task/' + task.id }" class="btn btn-primary btn-lg active">Изменить</a></td>
-            <td th:if="${!task.isCompleted}"><a th:href="${'/task/' + task.id + '/complete' }" class="btn btn-success btn-lg active">Завершить</a></td>
-            <td th:if="${task.isCompleted}"><a  class="btn btn-success btn-lg active">Завершено</a></td>
-            <td><a th:href="${'/task/' + task.id + '/delete' }" class="btn btn-danger btn-lg active">Удалить</a></td>
+            <td>
+                <div style="text-align: center;">
+                    <a class="icon-link" th:href="${'/task/' + task.id }">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                             class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd"
+                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                    </a>
+                </div>
+            </td>
+            <td th:if="${!task.isCompleted}">
+                <div style="text-align: center;">
+                    <a class="icon-link" th:href="${'/task/' + task.id + '/complete' }">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                             class="bi bi-square" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        </svg>
+                    </a>
+                </div>
+            </td>
+            <td th:if="${task.isCompleted}">
+                <div style="text-align: center;">
+                    <a class="icon-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+                             class="bi bi-check2-square" viewBox="0 0 16 16">
+                            <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
+                            <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+                        </svg>
+                    </a>
+                </div>
+            </td>
+            <td>
+                <div style="text-align: center;">
+                    <a class="icon-link" th:href="${'/task/' + task.id + '/delete' }">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                             class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                        </svg>
+                    </a>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
 
 <div style="text-align: center;">
-    <form action="#" th:action="@{/task/create}" method="get">
-        <input type="submit" value="Добавить задачу" class="btn btn-success btn-lg active"/>
-    </form>
+    <a class="icon-link" th:href="${'/task/create' }">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-plus-circle"
+             viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        </svg>
+    </a>
 </div>
 
 <!--/*/ <th:block th:insert="~{bootstrap/tail.html :: tail}">
